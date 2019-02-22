@@ -1,8 +1,4 @@
 import path from 'path'
-import {
-  DefinePlugin,
-  HotModuleReplacementPlugin,
-} from 'webpack'
 
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import HtmlWebpackTemplate from 'html-webpack-template'
@@ -37,7 +33,6 @@ export default {
         useShortDoctype: true,
       },
     }),
-    new HotModuleReplacementPlugin(),
   ],
   module: {
     rules: [{
@@ -49,7 +44,7 @@ export default {
       use: [{
         loader: 'babel-loader',
         options: {
-          cacheDirectory: true,
+          cacheDirectory: false,
         },
       }],
     }],
@@ -57,11 +52,7 @@ export default {
   devServer: {
     port: 3000,
     open: true,
-    proxy: {
-      '/api': `http://localhost:${process.env.SERVER_PORT}`,
-    },
-    historyApiFallback: true,
-    hot: true,
+    hot: false,
     stats: {
       colors: true,
       hash: false,
@@ -78,10 +69,5 @@ export default {
       warnings: false,
       publicPath: false,
     },
-  },
-  optimization: {
-    removeAvailableModules: false,
-    removeEmptyChunks: false,
-    splitChunks: false,
   },
 }
